@@ -4,7 +4,6 @@ import java.util.Map.Entry;
 public class item2item {
 
     public HashMap<String, HashMap<String, Double>> itemsgrades;   //build matrix for item - > user,rank
-    public HashMap<String, HashMap<String, Double>> cosim;        //matrix for simcos(it1,it2)
     public item2item(DataFrame df) {
         itemsgrades = new HashMap<>();
         //build user to item matrix
@@ -33,9 +32,13 @@ public class item2item {
             double item2_sum = 0;
             if(!item_i.equals(item))
             {
+
                 if(itemsgrades.containsKey(item_i)) {
+                    //all users rank of item i
                     HashMap<String, Double> user_i_rank = itemsgrades.get(item_i);
+                    //each user_rank
                     for (Entry<String, Double> e : item_rank.entrySet()) {
+                        //if item i and item_to_rank have rank by the same users
                         if (user_i_rank.containsKey(e.getKey())) {
                             double item1 = e.getValue();
                             double item2 = user_i_rank.get(e.getKey()).doubleValue();
@@ -45,8 +48,6 @@ public class item2item {
                         }
                     }
                 }
-                else
-                   continue;
             }
             else
                 continue;
@@ -65,8 +66,8 @@ public class item2item {
         String max2 = Collections.max(cosimtotal.entrySet(), (entry1, entry2) -> (int) (entry1.getValue() - entry2.getValue())).getKey();
         double max2sim = cosimtotal.get(max2);
         cosimtotal.remove(max2);
-        double rank1=1;
-        double rank2=1;
+        double rank1=0;
+        double rank2=0;
 
         for(int i = 0 ; i <user_rank.length;i++){
 

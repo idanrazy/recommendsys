@@ -17,12 +17,12 @@ public class Main {
         item2item t = new item2item(df);
         HashMap<String,Double> myranks = new HashMap<>();
         myranks.put("2",3.5);
-        myranks.put("32",3.5);
-        myranks.put("296",4.0);
+        myranks.put("3",3.0);
+        myranks.put("7",5.0);
         myranks.put("50",3.5);
         Entry<String, Double>[] temp = new Entry[myranks.size()];
         myranks.entrySet().toArray(temp);
-        double rank = t.predict(temp,"29","1");
+        double rank = t.predict(temp,"1","6");
         System.out.println(rank);
 
     }
