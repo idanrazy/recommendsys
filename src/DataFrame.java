@@ -23,8 +23,10 @@ public class DataFrame {
      return dataset.get(index);
 
     }
-    public Set<String> getcolumns(){
-        return columns.keySet();
+    public String[] getcolumns(){
+        String[] cols = new String[columns.keySet().size()];
+        columns.keySet().toArray(cols);
+        return cols;
     }
 
 
