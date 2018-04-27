@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Home">
+   <children>
+      <TitledPane collapsible="false" contentDisplay="CENTER" graphicTextGap="10.0" prefHeight="400.0" prefWidth="600.0" text="Recommendation System" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane opacity="0.5" prefHeight="355.0" prefWidth="598.0" style="-fx-background-image: url('/View/style/bg.jpg');" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <SplitPane dividerPositions="0.23174971031286212" layoutX="51.0" layoutY="42.0" prefHeight="303.0" prefWidth="529.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="42.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <VBox alignment="CENTER" layoutY="40.0" prefHeight="152.0" prefWidth="252.0" AnchorPane.bottomAnchor="395.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                                 <children>
+                                     <Button fx:id="mymovies" mnemonicParsing="false" onAction="#onPressMaster" prefHeight="35.0" prefWidth="137.0" text="MyMovies" visible="false" />
+                                     <Button fx:id="btn_login" mnemonicParsing="false" onAction="#onPressMaster" prefHeight="35.0" prefWidth="137.0" text="Login" />
+                                     <Button fx:id="btn_register" mnemonicParsing="false" onAction="#onPressMaster" prefHeight="35.0" prefWidth="137.0" text="Register" />
+                                     <Button fx:id="btn_about" mnemonicParsing="false" onAction="#onPressMaster" prefHeight="35.0" prefWidth="137.0" text="About" />
+                                 </children>
+                              </VBox>
+                           </children></AnchorPane>
+                      <AnchorPane fx:id="detailContainer" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <Pane fx:id="login" accessibleText="Login" prefHeight="237.0" prefWidth="320.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <GridPane layoutX="154.0" layoutY="81.0" prefHeight="108.0" prefWidth="295.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="115.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="224.0" minWidth="10.0" prefWidth="180.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <TextField fx:id="login_username" promptText="Username..." GridPane.columnIndex="1" />
+                                          <Label prefHeight="17.0" prefWidth="129.0" text="Username" GridPane.columnIndex="0">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                             <GridPane.margin>
+                                                <Insets left="15.0" />
+                                             </GridPane.margin></Label>
+                                          <Label text="Password" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                             <GridPane.margin>
+                                                <Insets left="15.0" />
+                                             </GridPane.margin></Label>
+                                           <TextField fx:id="login_password" promptText="Password..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                       </children>
+                                    </GridPane>
+                                     <Button alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="242.0" layoutY="208.0" mnemonicParsing="false" onAction="#onPressLogin" prefHeight="31.0" prefWidth="118.0" text="Login" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <Label layoutX="248.0" layoutY="31.0" text="Login Form">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="register" prefHeight="237.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                     <GridPane layoutX="155.0" layoutY="44.0" prefHeight="108.0" prefWidth="295.0">
+                                         <columnConstraints>
+                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="115.0" />
+                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="224.0" minWidth="10.0" prefWidth="180.0" />
+                                         </columnConstraints>
+                                         <rowConstraints>
+                                             <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+                                             <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                                         </rowConstraints>
+                                         <children>
+                                             <TextField fx:id="register_username" promptText="Username..." GridPane.columnIndex="1" />
+                                             <Label prefHeight="17.0" prefWidth="129.0" text="Username" GridPane.columnIndex="0">
+                                                 <font>
+                                                     <Font size="16.0" />
+                                                 </font>
+                                                 <GridPane.margin>
+                                                     <Insets left="15.0" />
+                                                 </GridPane.margin></Label>
+                                             <Label text="Password" GridPane.rowIndex="1">
+                                                 <font>
+                                                     <Font size="16.0" />
+                                                 </font>
+                                                 <GridPane.margin>
+                                                     <Insets left="15.0" />
+                                                 </GridPane.margin></Label>
+                                             <TextField fx:id="register_password" promptText="Password..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                         </children>
+                                     </GridPane>
+                                     <Button alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="243.0" layoutY="534.0" mnemonicParsing="false" onAction="#onPressLogin" prefHeight="31.0" prefWidth="118.0" text="Login" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                     <Label layoutX="251.0" layoutY="14.0" text="Register Form">
+                                         <font>
+                                             <Font name="System Bold" size="20.0" />
+                                         </font>
+                                     </Label>
+                                    <GridPane layoutX="19.0" layoutY="204.0" prefHeight="311.0" prefWidth="620.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints maxHeight="105.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="214.0" minHeight="10.0" prefHeight="214.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="The Shawshenk Redemption" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="0" />
+                                          <Label alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Forrest Gump" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="1" />
+                                          <Label alignment="CENTER" prefHeight="17.0" prefWidth="123.0" text="Fight Club" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="2" />
+                                          <Label alignment="CENTER" prefHeight="17.0" prefWidth="123.0" text="Requiem for a Dream" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="3" />
+                                          <Label text="Star Wars: Episode V - The Empire Strikes Back" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="4" />
+                                          <TextField fx:id="shawshenk" promptText="Rating..." GridPane.rowIndex="2" />
+                                          <TextField fx:id="forrest" promptText="Rating..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <TextField fx:id="fightclub" promptText="Rating..." GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                          <TextField fx:id="requiem" promptText="Rating..." GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <TextField fx:id="starwars" promptText="Rating..." GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                          <ImageView fitHeight="323.0" fitWidth="124.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@style/forrest.jpg" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="180.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@style/shawshenk.jpg" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="174.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@style/fightclub.jpg" />
+                                             </image></ImageView>
+                                          <ImageView fitHeight="178.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@style/requiem.jpg" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="179.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                             <image>
+                                                <Image url="@style/starwars.jpg" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </GridPane>
+                                    <Label layoutX="187.0" layoutY="164.0" text="Please rate the following movies">
+                                       <font>
+                                          <Font name="System Bold" size="17.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="about" prefHeight="237.0" prefWidth="320.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Pane fx:id="welcome" layoutY="23.0" prefHeight="564.0" prefWidth="601.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
+                                 <children>
+                                    <VBox alignment="CENTER" prefHeight="64.0" prefWidth="601.0">
+                                       <children>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Welcome to Movie Recommendation System!" textFill="#2e49f5">
+                                             <font>
+                                                <Font name="System Bold Italic" size="22.0" />
+                                             </font>
+                                          </Label>
+                                           <Label alignment="CENTER" contentDisplay="CENTER" text="Press a button from the navigation pane on the left" textFill="#2e49f5">
+                                               <font>
+                                                   <Font name="System Bold Italic" size="22.0" />
+                                               </font>
+                                           </Label>
+                                       </children>
+                                    </VBox>
+                                 </children></Pane>
+                           </children></AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children></AnchorPane>
+        </content>
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </TitledPane>
+   </children>
+</AnchorPane>
