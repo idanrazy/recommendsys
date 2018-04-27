@@ -1,4 +1,4 @@
-package Model;
+import javafx.util.Pair;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -21,7 +21,7 @@ public class item2item {
             }
         }
     }
-    public Double predict(Entry<String,Double>[] user_rank ,String item,String user){
+    public Double predict(Entry<String,Double>[] user_rank ,String item){
 
         //the ranks of the item we want to predict
         HashMap<String,Double> item_rank = itemsgrades.get(item);
@@ -65,7 +65,7 @@ public class item2item {
         String max1 = Collections.max(cosimtotal.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();;
         double max1sim = cosimtotal.get(max1);
         cosimtotal.remove(max1);
-        String max2 = Collections.max(cosimtotal.entrySet(), (entry1, entry2) -> (int) (entry1.getValue() - entry2.getValue())).getKey();
+        String max2 = Collections.max(cosimtotal.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();
         double max2sim = cosimtotal.get(max2);
         cosimtotal.remove(max2);
         double rank1=0;
@@ -84,5 +84,19 @@ public class item2item {
         }
 
         return (Double)(rank1*max1sim + rank2*max2sim)/(max1sim+max2sim);
+    }
+
+    ArrayList<Pair<String,Double>> predictmovelist(DataFrame df,Entry<String,Double>[] user_rank){
+        String[] list = df.uniquevlaue("movieId");
+        ArrayList<Pair<String,Double>> moviesrank = new ArrayList<>();
+        for(int i =0 ; i <list.length;i++){
+            String item = list[i];
+            if(i==2304)
+                System.out.println(i+":item");
+            double rank = predict(user_rank,item);
+            moviesrank.add(new Pair(item,rank));
+        }
+        Collections.sort(moviesrank,Comparator.comparing(p->-p.getValue()));
+        return moviesrank;
     }
 }

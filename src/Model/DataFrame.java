@@ -1,5 +1,3 @@
-package Model;
-
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -31,11 +29,22 @@ public class DataFrame {
         return cols;
     }
 
+    public String[] uniquevlaue(String column){
+        ArrayList<String> uniquelist = new ArrayList<>();
+        int col = columns.get(column);
+        for(int i = 1 ; i<size;i++){
+            uniquelist.add(dataset.get(i)[col]);
+        }
+        Set set = new HashSet(uniquelist);
+        String[] uniquearr = new String[set.size()];
+        set.toArray(uniquearr);
+        return uniquearr;
+    }
 
     public ArrayList select(String column,String value){
         ArrayList<String[]> mylist = new ArrayList<String[]>();
         for(int i = 1; i < dataset.size();i++){
-            if(dataset.get(i)[columns.get(column)].equals(value)){
+            if(dataset.get(i)[columns.get(column)].contains(value)){
                 mylist.add(dataset.get(i));
             }
         }
