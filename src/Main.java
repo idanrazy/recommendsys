@@ -2,6 +2,7 @@
  * Created by levye on 27-Apr-18.
  */
 
+import Model.CSVparser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,12 +18,6 @@ public class Main extends Application {
         primaryStage.setTitle("Recommendation System");
         primaryStage.setScene(new Scene(root, 1000, 750));
         primaryStage.show();
-
-
-/*        if (debugMode) {
-            Model.login("Eden", "Sisma123");
-            mainController.loginSuccessful("Eden");
-        }*/
     }
 
 

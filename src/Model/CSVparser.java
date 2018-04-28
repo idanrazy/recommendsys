@@ -9,8 +9,6 @@ import java.util.Map;
 public class CSVparser {
 
 
-
-
     static String cvsSplitBy = ",";
 
 

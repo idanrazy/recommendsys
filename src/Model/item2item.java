@@ -2,8 +2,12 @@ package Model;
 
 import javafx.util.Pair;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.*;
 import java.util.Map.Entry;
+
+import static Model.CSVparser.cvsSplitBy;
 
 public class item2item {
 
@@ -63,32 +67,37 @@ public class item2item {
 
 
         //calculate rank
+        try {
+            String max1 = Collections.max(cosimtotal.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();
+            ;
+            double max1sim = cosimtotal.get(max1);
+            cosimtotal.remove(max1);
+            String max2 = Collections.max(cosimtotal.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();
+            double max2sim = cosimtotal.get(max2);
+            cosimtotal.remove(max2);
+            double rank1 = 0;
+            double rank2 = 0;
 
-        String max1 = Collections.max(cosimtotal.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();;
-        double max1sim = cosimtotal.get(max1);
-        cosimtotal.remove(max1);
-        String max2 = Collections.max(cosimtotal.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();
-        double max2sim = cosimtotal.get(max2);
-        cosimtotal.remove(max2);
-        double rank1=0;
-        double rank2=0;
 
-        for(int i = 0 ; i <user_rank.length;i++){
+            for (int i = 0; i < user_rank.length; i++) {
 
-            if(user_rank[i].getKey().equals(max1))
-            {
-                rank1 = user_rank[i].getValue();
+                if (user_rank[i].getKey().equals(max1)) {
+                    rank1 = user_rank[i].getValue();
+                }
+                if (user_rank[i].getKey().equals(max2)) {
+                    rank2 = user_rank[i].getValue();
+                }
             }
-            if(user_rank[i].getKey().equals(max2))
-            {
-                rank2 = user_rank[i].getValue();
-            }
+
+
+            return (Double) (rank1 * max1sim + rank2 * max2sim) / (max1sim + max2sim);
+        } catch(Exception e){
+            e.printStackTrace();
         }
-
-        return (Double)(rank1*max1sim + rank2*max2sim)/(max1sim+max2sim);
+        return null;
     }
 
-    ArrayList<Pair<String,Double>> predictmovelist(DataFrame df,Entry<String,Double>[] user_rank){
+    public ArrayList<Pair<String,Double>> predictmovelist(DataFrame df,Entry<String,Double>[] user_rank){
         String[] list = df.uniquevlaue("movieId");
         ArrayList<Pair<String,Double>> moviesrank = new ArrayList<>();
         for(int i =0 ; i <list.length;i++){
@@ -100,5 +109,44 @@ public class item2item {
         }
         Collections.sort(moviesrank,Comparator.comparing(p->-p.getValue()));
         return moviesrank;
+    }
+
+    public static String[] getDetailsMovie(String csvFile,int id ) {
+
+        String[] row = new String[3];
+        String line ="";
+        String idMovie;
+        int i = 0;
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine() ) != null  ) {
+
+                idMovie = line.replaceAll("\\,.*", "");
+
+                if(isInteger(idMovie,10)){
+                    int foo = Integer.parseInt( idMovie);
+                    if(foo == id){
+                        row = line.split(cvsSplitBy);
+                        break;
+                    }
+                }
+            }
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return  row;
+    }
+    public static boolean isInteger(String s, int radix) {
+        if(s.isEmpty()) return false;
+        for(int i = 0; i < s.length(); i++) {
+            if(i == 0 && s.charAt(i) == '-') {
+                if(s.length() == 1) return false;
+                else continue;
+            }
+            if(Character.digit(s.charAt(i),radix) < 0) return false;
+        }
+        return true;
     }
 }

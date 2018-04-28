@@ -1,15 +1,16 @@
 package Controller;
 
+import Model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import sun.nio.cs.CharsetMapping;
+
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by levye on 27-Apr-18.
@@ -35,6 +36,8 @@ public class Home implements Initializable {
     public TableColumn col_rating;
     public TableColumn col_genres;
 
+    public static HashMap<String,Double> myratings = new HashMap<>();
+
     public final static Map<String,String> users = new HashMap<>();
     public static String currentUser = null;
 
@@ -47,6 +50,17 @@ public class Home implements Initializable {
         col_genres.setCellValueFactory(new PropertyValueFactory<>("genres"));
 
         table.getItems().add(new MovieRow("star wars", 4.5, "Drama"));
+    }
+
+    public List getRatings(java.util.Set<java.util.Map.Entry<String,Double>> user_rank){
+        HashMap<Integer, String[]> dataset = CSVparser.parse(Model.DataFrame.class.getResource("ratings.csv").getPath(), 300000);
+        DataFrame df = new DataFrame(dataset);
+        item2item t = new item2item(df);
+        java.util.Map.Entry<String,Double>[] ranks = new Map.Entry[user_rank.size()];
+        user_rank.toArray(ranks);
+        List test = t.predictmovelist(df,ranks);
+
+        return test;
     }
 
     public void onPressMaster(ActionEvent event){
@@ -110,14 +124,17 @@ public class Home implements Initializable {
         } else{
             users.put(username,password);
 
-            //call algorithm
+            java.util.Set<java.util.Map.Entry<String,Double>> user_rank = processRatings();
+
+
+
 
             btn_mymovies.getOnAction().handle(new ActionEvent(btn_mymovies,null));
         }
 
     }
 
-    public void processRatings(){
+    public java.util.Set<java.util.Map.Entry<String, Double>> processRatings(){
         try {
             double shawshenk = Double.parseDouble(this.shawshenk.getText());
             double requiem = Double.parseDouble(this.requiem.getText());
@@ -125,12 +142,22 @@ public class Home implements Initializable {
             double fightclub = Double.parseDouble(this.fightclub.getText());
             double starwars = Double.parseDouble(this.starwars.getText());
 
+            myratings.put("318", shawshenk);
+            myratings.put("356", forrest);
+            myratings.put("2959", fightclub);
+            myratings.put("3949", requiem);
+            myratings.put("1196", starwars);
+
+            return myratings.entrySet();
+
 
         } catch (NumberFormatException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("One of your ratings is invalid! Please enter a valid number");
             alert.show();
         }
+
+        return null;
     }
 
 
