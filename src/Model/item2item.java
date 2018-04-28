@@ -130,13 +130,16 @@ public class item2item {
         try {
             BufferedReader br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine() ) != null  ) {
-
                 idMovie = line.replaceAll("\\,.*", "");
 
                 if(isInteger(idMovie,10)){
                     int foo = Integer.parseInt( idMovie);
                     if(foo == id){
-                        row = line.split(cvsSplitBy);
+
+                        row[0] = new String(line.substring(0,line.indexOf(",")));
+                        row[1] = new String(line.substring(line.indexOf(",")+1, line.lastIndexOf(","))).replaceAll("\"", "");
+                        row[2] = new String(line.substring(line.lastIndexOf(",")+1));
+
                         break;
                     }
                 }

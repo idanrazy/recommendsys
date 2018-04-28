@@ -1,14 +1,13 @@
 package Controller;
 
 import Model.*;
-import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import sun.nio.cs.CharsetMapping;
+import javafx.util.Pair;
 
 import java.net.URL;
 import java.util.*;
@@ -39,6 +38,8 @@ public class Home implements Initializable {
 
     public static HashMap<String,Double> myratings = new HashMap<>();
 
+    public static HashMap<String,ArrayList<MovieRow>> user_tables = new HashMap<>();
+
     public final static Map<String,String> users = new HashMap<>();
     public static String currentUser = null;
 
@@ -50,17 +51,16 @@ public class Home implements Initializable {
         col_rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         col_genres.setCellValueFactory(new PropertyValueFactory<>("genres"));
 
-        table.getItems().add(new MovieRow("star wars", 4.5, "Drama"));
+//        table.getItems().add(new MovieRow("star wars", 4.5, "Drama"));
     }
 
-    public List getRatings(java.util.Set<java.util.Map.Entry<String,Double>> user_rank){
-      //  String csvpath = Model.DataFrame.class.getResource("ratings.csv").getPath();
-        HashMap<Integer, String[]> dataset = CSVparser.parse("C:\\Users\\idanr\\OneDrive\\מסמכים\\GitHub\\recommendsys\\src\\Model\\ratings.csv", 300000);
+    public ArrayList<Pair<String,Double>> getRatings(java.util.Set<java.util.Map.Entry<String,Double>> user_rank){
+        HashMap<Integer, String[]> dataset = CSVparser.parse(Model.DataFrame.class.getResource("ratings.csv").getPath(), 300000);
         DataFrame df = new DataFrame(dataset);
         item2item t = new item2item(df);
         java.util.Map.Entry<String,Double>[] ranks = new Map.Entry[user_rank.size()];
         user_rank.toArray(ranks);
-        List test = t.predictmovelist(df,ranks);
+        ArrayList<Pair<String,Double>> test = t.predictmovelist(df,ranks);
 
         return test;
     }
@@ -79,6 +79,10 @@ public class Home implements Initializable {
         String username = login_username.getText();
         String password = login_password.getText();
 
+        login (username,password);
+    }
+
+    public void login(String username, String password){
         if (username.length()>0 && password.length()>0 && users.containsKey(username) && users.get(username).equals(password)){
             if (currentUser != null){
                 logout();
@@ -86,6 +90,17 @@ public class Home implements Initializable {
             currentUser = username;
             btn_mymovies.setVisible(true);
             logout.setVisible(true);
+
+            ArrayList<MovieRow> user_rows = user_tables.get(currentUser);
+            if (user_rows == null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Error loading your preferences.");
+                alert.show();
+                return;
+            } else {
+                table.getItems().clear();
+                table.getItems().addAll(user_rows);
+            }
 
             btn_mymovies.getOnAction().handle(new ActionEvent(btn_mymovies,null));
         } else {
@@ -125,16 +140,32 @@ public class Home implements Initializable {
             return;
         } else{
             users.put(username,password);
+            currentUser = username;
 
             java.util.Set<java.util.Map.Entry<String,Double>> user_rank = processRatings();
-            getRatings(user_rank);
-
-
-
-
-            btn_mymovies.getOnAction().handle(new ActionEvent(btn_mymovies,null));
+            prepareTable(user_rank);
+            login(username,password);
         }
 
+    }
+
+    public void prepareTable(java.util.Set<java.util.Map.Entry<String,Double>> user_rank){
+
+        ArrayList<MovieRow> rows = new ArrayList<>();
+
+        ArrayList<Pair<String,Double>> ratings = getRatings(user_rank);
+        ratings.stream().limit(20).forEachOrdered(
+                item ->{
+                    String[] details = item2item.getDetailsMovie(Model.DataFrame.class.getResource("movies.csv").getPath(),Integer.parseInt(item.getKey()));
+                    MovieRow row = new MovieRow(details[1], item.getValue(), details[2]);
+                    rows.add(row);
+                }
+        );
+
+        table.getItems().clear();
+        table.getItems().addAll(rows);
+
+        user_tables.put(currentUser,rows);
     }
 
     public java.util.Set<java.util.Map.Entry<String, Double>> processRatings(){
