@@ -30,6 +30,7 @@ public class Home implements Initializable {
     public TextField forrest;
     public TextField register_username;
     public TextField register_password;
+    public Button logout;
 
     public final static Map<String,String> users = new HashMap<>();
     public static String currentUser = null;
@@ -60,6 +61,7 @@ public class Home implements Initializable {
             }
             currentUser = username;
             mymovies.setVisible(true);
+            logout.setVisible(true);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login failed");
@@ -72,10 +74,49 @@ public class Home implements Initializable {
     public void logout(){
         currentUser = null;
         mymovies.setVisible(false);
+        logout.setVisible(false);
+    }
+
+    public void onPressLogout(ActionEvent event){
+        logout();
     }
 
     public void onRegister(ActionEvent event){
         String username = register_username.getText();
+        String password = register_password.getText();
+
+        if (users.containsKey(username)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Username already exists. Pick a different user.");
+            alert.show();
+            return;
+        } else{
+            users.put(username,password);
+
+            //call algorithm
+
+            mymovies.getOnAction().handle(new ActionEvent(mymovies,null));
+        }
+
+
+
+
+    }
+
+    public void processRatings(){
+        try {
+            double shawshenk = Double.parseDouble(this.shawshenk.getText());
+            double requiem = Double.parseDouble(this.requiem.getText());
+            double forrest = Double.parseDouble(this.forrest.getText());
+            double fightclub = Double.parseDouble(this.fightclub.getText());
+            double starwars = Double.parseDouble(this.starwars.getText());
+
+
+        } catch (NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("One of your ratings is invalid! Please enter a valid number");
+            alert.show();
+        }
     }
 
 }

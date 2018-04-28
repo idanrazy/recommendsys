@@ -27,12 +27,13 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <VBox alignment="CENTER" layoutY="40.0" prefHeight="152.0" prefWidth="252.0" AnchorPane.bottomAnchor="395.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                              <VBox alignment="CENTER" layoutY="22.0" prefHeight="192.0" prefWidth="195.0" AnchorPane.bottomAnchor="373.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="22.0">
                                  <children>
                                      <Button fx:id="mymovies" mnemonicParsing="false" onAction="#onPressMaster" prefHeight="35.0" prefWidth="137.0" text="MyMovies" visible="false" />
                                      <Button fx:id="btn_login" mnemonicParsing="false" onAction="#onPressMaster" prefHeight="35.0" prefWidth="137.0" text="Login" />
                                      <Button fx:id="btn_register" mnemonicParsing="false" onAction="#onPressMaster" prefHeight="35.0" prefWidth="137.0" text="Register" />
                                      <Button fx:id="btn_about" mnemonicParsing="false" onAction="#onPressMaster" prefHeight="35.0" prefWidth="137.0" text="About" />
+                                    <Button fx:id="logout" mnemonicParsing="false" onAction="#onPressLogout" prefHeight="31.0" prefWidth="137.0" text="Log Out" visible="false" />
                                  </children>
                               </VBox>
                            </children></AnchorPane>
@@ -76,7 +77,7 @@
                                     </Label>
                                  </children>
                               </Pane>
-                              <Pane fx:id="register" prefHeight="237.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Pane fx:id="register" prefHeight="237.0" prefWidth="320.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                      <GridPane layoutX="155.0" layoutY="44.0" prefHeight="108.0" prefWidth="295.0">
                                          <columnConstraints>
@@ -106,7 +107,10 @@
                                              <TextField fx:id="register_password" promptText="Password..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                          </children>
                                      </GridPane>
-                                     <Button alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="243.0" layoutY="534.0" mnemonicParsing="false" onAction="#onPressLogin" prefHeight="31.0" prefWidth="118.0" text="Login" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                     <Button alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="243.0" layoutY="534.0" mnemonicParsing="false" onAction="#onRegister" prefHeight="31.0" prefWidth="148.0" text="Register" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font></Button>
                                      <Label layoutX="251.0" layoutY="14.0" text="Register Form">
                                          <font>
                                              <Font name="System Bold" size="20.0" />
@@ -138,38 +142,57 @@
                                           <TextField fx:id="starwars" promptText="Rating..." GridPane.columnIndex="4" GridPane.rowIndex="2" />
                                           <ImageView fitHeight="323.0" fitWidth="124.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <image>
-                                                <Image url="@style/forrest.jpg" />
+                                                <Image url="/View/style/forrest.jpg" />
                                              </image>
                                           </ImageView>
                                           <ImageView fitHeight="180.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
                                              <image>
-                                                <Image url="@style/shawshenk.jpg" />
+                                               <Image url="/View/style/shawshenk.jpg" />
                                              </image>
                                           </ImageView>
                                           <ImageView fitHeight="174.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                              <image>
-                                                <Image url="@style/fightclub.jpg" />
+                                                 <Image url="/View/style/fightclub.jpg" />
                                              </image></ImageView>
                                           <ImageView fitHeight="178.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                              <image>
-                                                <Image url="@style/requiem.jpg" />
+                                                <Image url="/View/style/requiem.jpg" />
                                              </image>
                                           </ImageView>
                                           <ImageView fitHeight="179.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                              <image>
-                                                <Image url="@style/starwars.jpg" />
+                                                <Image url="/View/style/starwars.jpg" />
                                              </image>
                                           </ImageView>
                                        </children>
                                     </GridPane>
-                                    <Label layoutX="187.0" layoutY="164.0" text="Please rate the following movies">
+                                    <Label layoutX="163.0" layoutY="164.0" text="Please rate the following movies (1-5):">
                                        <font>
                                           <Font name="System Bold" size="17.0" />
                                        </font>
                                     </Label>
                                  </children>
                               </Pane>
-                              <Pane fx:id="about" prefHeight="237.0" prefWidth="320.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Pane fx:id="about" prefHeight="237.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="658.0">
+                                       <children>
+                                          <Label text="Movie Recommendation System">
+                                             <font>
+                                                <Font name="System Bold Italic" size="18.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="20.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label text="by Ido Sakazi, Shay Sakazi, Idan Razy, Eden Levy">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                 </children></Pane>
                               <Pane fx:id="welcome" layoutY="23.0" prefHeight="564.0" prefWidth="601.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
                                  <children>
                                     <VBox alignment="CENTER" prefHeight="64.0" prefWidth="601.0">
@@ -187,6 +210,7 @@
                                        </children>
                                     </VBox>
                                  </children></Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" />
                            </children></AnchorPane>
                     </items>
                   </SplitPane>
