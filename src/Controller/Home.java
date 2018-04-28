@@ -2,9 +2,8 @@ package Controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.net.URL;
@@ -22,7 +21,7 @@ public class Home implements Initializable {
     public AnchorPane detailContainer;
     public TextField login_username;
     public TextField login_password;
-    public Button mymovies;
+    public Button btn_mymovies;
     public TextField shawshenk;
     public TextField requiem;
     public TextField fightclub;
@@ -31,6 +30,10 @@ public class Home implements Initializable {
     public TextField register_username;
     public TextField register_password;
     public Button logout;
+    public TableView table;
+    public TableColumn col_name;
+    public TableColumn col_rating;
+    public TableColumn col_genres;
 
     public final static Map<String,String> users = new HashMap<>();
     public static String currentUser = null;
@@ -39,6 +42,11 @@ public class Home implements Initializable {
     public void initialize (URL location, ResourceBundle resources) {
         users.put("a", "a");
 
+        col_name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        col_rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        col_genres.setCellValueFactory(new PropertyValueFactory<>("genres"));
+
+        table.getItems().add(new MovieRow("star wars", 4.5, "Drama"));
     }
 
     public void onPressMaster(ActionEvent event){
@@ -60,8 +68,10 @@ public class Home implements Initializable {
                 logout();
             }
             currentUser = username;
-            mymovies.setVisible(true);
+            btn_mymovies.setVisible(true);
             logout.setVisible(true);
+
+            btn_mymovies.getOnAction().handle(new ActionEvent(btn_mymovies,null));
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login failed");
@@ -73,8 +83,15 @@ public class Home implements Initializable {
 
     public void logout(){
         currentUser = null;
-        mymovies.setVisible(false);
+        btn_mymovies.setVisible(false);
         logout.setVisible(false);
+
+        detailContainer.getChildren().forEach(
+                pane ->{
+                    if (pane.getId().equalsIgnoreCase("welcome")) pane.setVisible(true);
+                    else pane.setVisible(false);
+                }
+        );
     }
 
     public void onPressLogout(ActionEvent event){
@@ -95,11 +112,8 @@ public class Home implements Initializable {
 
             //call algorithm
 
-            mymovies.getOnAction().handle(new ActionEvent(mymovies,null));
+            btn_mymovies.getOnAction().handle(new ActionEvent(btn_mymovies,null));
         }
-
-
-
 
     }
 
@@ -116,6 +130,43 @@ public class Home implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("One of your ratings is invalid! Please enter a valid number");
             alert.show();
+        }
+    }
+
+
+    public class MovieRow{
+        private String name;
+        private Double rating;
+        private String genres;
+
+        public MovieRow(String name, Double rating, String genres){
+            this.name = name;
+            this.rating = rating;
+            this.genres = genres;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Double getRating() {
+            return rating;
+        }
+
+        public void setRating(Double rating) {
+            this.rating = rating;
+        }
+
+        public String getGenres() {
+            return genres;
+        }
+
+        public void setGenres(String genres) {
+            this.genres = genres;
         }
     }
 
