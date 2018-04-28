@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.*;
+import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -53,7 +54,8 @@ public class Home implements Initializable {
     }
 
     public List getRatings(java.util.Set<java.util.Map.Entry<String,Double>> user_rank){
-        HashMap<Integer, String[]> dataset = CSVparser.parse(Model.DataFrame.class.getResource("ratings.csv").getPath(), 300000);
+      //  String csvpath = Model.DataFrame.class.getResource("ratings.csv").getPath();
+        HashMap<Integer, String[]> dataset = CSVparser.parse("C:\\Users\\idanr\\OneDrive\\מסמכים\\GitHub\\recommendsys\\src\\Model\\ratings.csv", 300000);
         DataFrame df = new DataFrame(dataset);
         item2item t = new item2item(df);
         java.util.Map.Entry<String,Double>[] ranks = new Map.Entry[user_rank.size()];
@@ -125,6 +127,7 @@ public class Home implements Initializable {
             users.put(username,password);
 
             java.util.Set<java.util.Map.Entry<String,Double>> user_rank = processRatings();
+            getRatings(user_rank);
 
 
 

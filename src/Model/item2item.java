@@ -68,46 +68,55 @@ public class item2item {
 
         //calculate rank
         try {
-            String max1 = Collections.max(cosimtotal.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();
-            ;
-            double max1sim = cosimtotal.get(max1);
-            cosimtotal.remove(max1);
-            String max2 = Collections.max(cosimtotal.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();
-            double max2sim = cosimtotal.get(max2);
-            cosimtotal.remove(max2);
-            double rank1 = 0;
-            double rank2 = 0;
+            if(cosimtotal.size()>1) {
+                String max1 = Collections.max(cosimtotal.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();
+                double max1sim = cosimtotal.get(max1);
+                cosimtotal.remove(max1);
+                String max2 = Collections.max(cosimtotal.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getKey();
+                double max2sim = cosimtotal.get(max2);
+                cosimtotal.remove(max2);
+                double rank1 = 0;
+                double rank2 = 0;
 
 
-            for (int i = 0; i < user_rank.length; i++) {
+                for (int i = 0; i < user_rank.length; i++) {
 
-                if (user_rank[i].getKey().equals(max1)) {
-                    rank1 = user_rank[i].getValue();
+                    if (user_rank[i].getKey().equals(max1)) {
+                        rank1 = user_rank[i].getValue();
+                    }
+                    if (user_rank[i].getKey().equals(max2)) {
+                        rank2 = user_rank[i].getValue();
+                    }
                 }
-                if (user_rank[i].getKey().equals(max2)) {
-                    rank2 = user_rank[i].getValue();
-                }
+
+
+                return (Double) (rank1 * max1sim + rank2 * max2sim) / (max1sim + max2sim);
             }
 
-
-            return (Double) (rank1 * max1sim + rank2 * max2sim) / (max1sim + max2sim);
         } catch(Exception e){
             e.printStackTrace();
         }
-        return null;
+        return Double.NaN;
     }
 
     public ArrayList<Pair<String,Double>> predictmovelist(DataFrame df,Entry<String,Double>[] user_rank){
+
         String[] list = df.uniquevlaue("movieId");
         ArrayList<Pair<String,Double>> moviesrank = new ArrayList<>();
-        for(int i =0 ; i <list.length;i++){
-            String item = list[i];
-            if(i==2304)
-                System.out.println(i+":item");
-            double rank = predict(user_rank,item);
-            moviesrank.add(new Pair(item,rank));
+        try {
+            for (int i = 0; i < list.length; i++) {
+                String item = list[i];
+                //System.out.println(i + ":item " +list[i]);
+
+                double rank = predict(user_rank, item);
+                if(!Double.isNaN(rank))
+                    moviesrank.add(new Pair(item, rank));
+            }
+            Collections.sort(moviesrank, Comparator.comparing(p -> -p.getValue()));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return moviesrank;
         }
-        Collections.sort(moviesrank,Comparator.comparing(p->-p.getValue()));
         return moviesrank;
     }
 
