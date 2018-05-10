@@ -2,6 +2,8 @@ package Model;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,13 +14,16 @@ public class CSVparser {
     static String cvsSplitBy = ",";
 
 
-    public static HashMap<Integer, String[]> parse(String csvFile,int lines){
+    public static HashMap<Integer, String[]> parse(int lines){
         HashMap<Integer, String[]> dataset = new HashMap<>();
 
         String line ="";
         int i = 0;
         try {
-            BufferedReader br = new BufferedReader(new FileReader(csvFile));
+            InputStream is = CSVparser.class.getResourceAsStream("ratings.csv");
+            InputStreamReader ir = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(ir);
+//            BufferedReader br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine() ) != null && i < lines ) {
 
                 // use comma as separator

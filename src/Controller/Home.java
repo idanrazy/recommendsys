@@ -45,8 +45,6 @@ public class Home implements Initializable {
 
     @Override
     public void initialize (URL location, ResourceBundle resources) {
-        users.put("a", "a");
-
         col_name.setCellValueFactory(new PropertyValueFactory<>("name"));
         col_rating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         col_genres.setCellValueFactory(new PropertyValueFactory<>("genres"));
@@ -55,7 +53,7 @@ public class Home implements Initializable {
     }
 
     public ArrayList<Pair<String,Double>> getRatings(java.util.Set<java.util.Map.Entry<String,Double>> user_rank){
-        HashMap<Integer, String[]> dataset = CSVparser.parse(Model.DataFrame.class.getResource("ratings.csv").getPath(), 300000);
+        HashMap<Integer, String[]> dataset = CSVparser.parse(300000);
         DataFrame df = new DataFrame(dataset);
         item2item t = new item2item(df);
         java.util.Map.Entry<String,Double>[] ranks = new Map.Entry[user_rank.size()];
@@ -156,7 +154,7 @@ public class Home implements Initializable {
         ArrayList<Pair<String,Double>> ratings = getRatings(user_rank);
         ratings.stream().limit(20).forEachOrdered(
                 item ->{
-                    String[] details = item2item.getDetailsMovie(Model.DataFrame.class.getResource("movies.csv").getPath(),Integer.parseInt(item.getKey()));
+                    String[] details = item2item.getDetailsMovie(Integer.parseInt(item.getKey()));
                     MovieRow row = new MovieRow(details[1], item.getValue(), details[2]);
                     rows.add(row);
                 }

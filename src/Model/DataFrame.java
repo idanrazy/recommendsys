@@ -10,6 +10,8 @@ public class DataFrame {
     public HashMap<Integer,String[]> dataset;
     public int size;
 
+    public DataFrame(){}
+
     public DataFrame(HashMap<Integer,String[]> dataset){
         columns = new HashMap<>();
         this.dataset = dataset;

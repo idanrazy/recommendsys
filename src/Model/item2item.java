@@ -4,6 +4,8 @@ import javafx.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -120,7 +122,7 @@ public class item2item {
         return moviesrank;
     }
 
-    public static String[] getDetailsMovie(String csvFile,int id ) {
+    public static String[] getDetailsMovie(int id ) {
 
         String[] row = new String[3];
         String line ="";
@@ -128,7 +130,10 @@ public class item2item {
         int i = 0;
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(csvFile));
+            InputStream is = CSVparser.class.getResourceAsStream("movies.csv");
+            InputStreamReader ir = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(ir);
+//            BufferedReader br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine() ) != null  ) {
                 idMovie = line.replaceAll("\\,.*", "");
 
